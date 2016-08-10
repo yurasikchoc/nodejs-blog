@@ -1,0 +1,51 @@
+<% layout('/layouts/application') -%>
+<% block('title', 'Registration') -%>
+
+
+<form class="form-horizontal login-form" name="login-form" method="post">
+  <div class="form-group">
+    <label for="input-username" class="col-lg-2 control-label">Username</label>
+
+    <div class="col-lg-10">
+      <input name="username" value="" type="text" class="form-control" id="input-username" placeholder="Username">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="input-firstname" class="col-lg-2 control-label">First name</label>
+
+    <div class="col-lg-10">
+      <input name="firstName" value="" type="text" class="form-control" id="input-firstname" placeholder="First Name">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="input-lastname" class="col-lg-2 control-label">Last name</label>
+
+    <div class="col-lg-10">
+      <input name="lastName" value="" type="text" class="form-control" id="input-lastname" placeholder="Last name">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="input-password" class="col-lg-2 control-label">Password</label>
+
+    <div class="col-lg-10">
+      <input name="password" value="" type="password" class="form-control" id="input-password" placeholder="Password">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="input-passwordConfirmation" class="col-lg-2 control-label">Password</label>
+
+    <div class="col-lg-10">
+      <input name="passwordConfirmation" value="" type="password" class="form-control" id="input-passwordConfirmation" placeholder="Password confirmation">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <button type="submit" class="btn btn-primary">Sign up</button>
+      <span class="help-block error"></span>
+    </div>
+  </div>
+</form>

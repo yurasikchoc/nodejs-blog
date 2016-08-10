@@ -1,0 +1,22 @@
+{
+	"port": 1337,
+	"mongoose": {
+		"uri": "mongodb://localhost/blog",
+		"options": {
+			"server": {
+				"socketOptions": {
+					"keepAlive": 1
+				}
+			}
+		}
+	},
+	"session": {
+		"secret": "tralalalala",
+		"key": "connect.sid",
+		"cookie": {
+			"path" : "/",
+			"httpOnly": true,
+			"maxAge": null
+		}
+	}
+}

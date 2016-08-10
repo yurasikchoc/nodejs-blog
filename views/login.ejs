@@ -1,0 +1,26 @@
+<% layout('/layouts/application') -%>
+<% block('title', 'Login') -%>
+
+
+<form class="form-horizontal login-form" name="login-form" method="post">
+  <div class="form-group">
+    <label for="input-username" class="col-lg-2 control-label">Username</label>
+
+    <div class="col-lg-10">
+      <input name="username" value="" type="text" class="form-control" id="input-username" placeholder="Username">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="input-password" class="col-lg-2 control-label">Password</label>
+
+    <div class="col-lg-10">
+      <input name="password" value="" type="password" class="form-control" id="input-password" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <button type="submit" class="btn btn-primary">Login</button>
+      <span class="help-block error"></span>
+    </div>
+  </div>
+</form>
