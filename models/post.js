@@ -26,7 +26,10 @@ var schema = new Schema({
   comments: [
     {
       body:"string", 
-      by: mongoose.Schema.Types.ObjectId
+      by: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      }
     }
   ],
   created: {

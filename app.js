@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var config = require('./config')
-
+var flash = require('connect-flash');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
@@ -37,6 +37,13 @@ app.use(session);
 
 app.use(require('./middleware/loadUser'));
 
+app.use(flash());
+
+app.use(function(req, res, next) {
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
+  next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);

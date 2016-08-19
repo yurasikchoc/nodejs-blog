@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%=blocks.title%></title>
+  <title><%= blocks.title || 'Blog' %></title>
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 
   <link rel="stylesheet" href="/vendor/bower_components/bootstrap/dist/css/bootstrap.css"/>
   <link rel="stylesheet" href="/stylesheets/style.css"/>
 
   <script src="/vendor/bower_components/jquery/dist/jquery.js"></script>
   <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="/vendor/bower_components/bootstrap-material-design/dist/bootstrap-material-design.css">
+
+
 </head>
 <body>
-<header>
-  <%-blocks.header%>
-</header>
-<section class="container">
 
-  <%-partial('../partials/topNavigation')%>
+<%-partial('../partials/topNavigation')%>
 
-  <% if (blocks.title) { %><h1><%=blocks.title%></h1><% } %>
 
-  <%-body -%>
-</section>
+<% if (error.length > 0) { %>
+  <div class="alert alert-danger">
+    <%= error %>  
+  </div>
+<% } %>
+<% if (success.length > 0) { %>
+  <div class="alert alert-success">
+    <%= success %>  
+  </div>
+<% } %>
+  <div class='container'>
+    <% if (blocks.title) { %><h1><%=blocks.title%></h1><% } %>
+    <%-body -%>
+  </div>
 <footer>
   <%-blocks.footer%>
 </footer>

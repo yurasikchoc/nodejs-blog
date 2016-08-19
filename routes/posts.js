@@ -19,7 +19,7 @@ router.post('/new',function(req, res, next) {
 	});
 	post.save(function(err){
 		if (err) next(err);
-		res.render('index')
+		res.redirect('/');
 	});
 });
 
@@ -29,15 +29,73 @@ router.get('/:id', function(req, res, next){
     } catch (e) {
       return next(404);
     }  
-    Post.findById(req.params.id, function(err, post) {
+    Post.findById(req.params.id).populate('postedBy').populate('comments.by').exec(function(err, post) {
   		if (err) return next(err); 
   		if (!post) {
   			next(404);
   		} else {
-  		  res.json(post)
+  		  res.render('posts/show', {post: post})
       }
 	})
 });
 
+router.get('/:id/edit', function(req, res, next){
+	try {
+      var id = new ObjectID(req.params.id);
+    } catch (e) {
+      return next(404);
+    }  
+    Post.findById(req.params.id).populate('postedBy').exec(function(err, post) {
+  		if (err) return next(err); 
+  		if (!post) {
+  			next(404);
+  		} else {
+  		  res.render('posts/edit', {post: post})
+      }
+	})
+});
+
+router.post('/:id/edit', function(req, res, next){
+	try {
+		var id = new ObjectID(req.params.id);
+	} catch (e) {
+		return next(404);
+	}  
+	Post.findOne({ _id: req.params.id, postedBy: req.user._id}).populate('postedBy').exec(function(err, post) {
+		if (err) return next(err); 
+		if (!post) {
+			next(404);
+		} else {
+			post.body = req.body.body;
+			post.title = req.body.title;
+			post.imgUrl = req.body.imgUrl;
+			post.save(function(err) {
+				if (err)
+					return next(err); 				
+				else
+					res.render('posts/show', {post: post});
+			});
+		}
+	})
+});
+
+router.post('/:id/new_comment', function(req, res, next){
+	try {
+		var id = new ObjectID(req.params.id);
+	} catch (e) {
+		return next(404);
+	}  
+	Post.findOneAndUpdate(
+	    {_id: req.params.id},
+	    {$push: {comments: {body: req.body.body, by: req.user}}},
+	    {safe: true, upsert: true},
+	    function(err, post) {
+	        if (err)
+	 			return next(err); 				
+			else
+				res.redirect('../'+id);
+	    }
+	);
+});
 
 module.exports = router;

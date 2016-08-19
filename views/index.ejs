@@ -1,15 +1,29 @@
 <% layout('/layouts/application') -%>
 
 <% posts.forEach(function(post){ %>
-<div class="container">
-	<div class="col-md-12">
-    	<h1><a  href="/posts/<%=post._id%>"><%= post.title %></a></h1>
-    	<p><%= post.body %></p>
-    	<div>
-			<span class="badge">Posted <%= post.created.toLocaleString()%></span><div class="pull-right"><span class="label label-default">alice</span> <span class="label label-primary">story</span> <span 	class="label label-success">blog</span> <span class="label label-info">personal</span> <span class="label label-warning">Warning</span>
-			<span class="label label-danger">Danger</span></div>         
-     	</div>
-    <hr>
-    </div>
-</div>
+	<div class="container">
+		<div class="col-md-12">
+	    	<h2>
+	    		<a href="/posts/<%=post._id%>">
+	    			<%= post.title %>
+	    		</a>
+
+	    		<% if ( user && post.postedBy._id.equals(user._id)) { %>
+	    			<a href="/posts/<%=post._id%>/edit"><small> edit</small></a>
+	    		<% } %>	
+	    	</h2>
+	    	<p>
+	    		<%= post.body %>
+	    	</p>
+	    	<div>
+				<span class="badge"><%= post.created.toLocaleString()%></span>
+				<div class="pull-right"> 
+					<a  href="/users/<%=post.postedBy._id%>">
+						<span class="label label-info"><%= post.postedBy.username %></span> 
+					</a>
+				</div>         
+	     	</div>
+	    <hr>
+	    </div>
+	</div>
 <% }) %>

@@ -3,7 +3,7 @@ var router = express.Router();
 var User = require('../models/user').User;
 
 router.get('/login',function(req, res) {
-  res.render('login');
+  res.render('users/login');
 });
 
 router.post('/login',function(req, res, next) {
@@ -15,15 +15,16 @@ router.post('/login',function(req, res, next) {
     }
     if(user){
       req.session.user = user._id;
-      res.render('index')
+      res.redirect('/')
     } else {
-      res.render('login')
+      req.flash('error', 'Invalid login or password')
+      res.redirect('login')
     }
   });
 });
 
 router.get('/register',function(req, res) {
-  res.render('register');
+  res.render('users/register');
 });
 
 router.post('/register',function(req, res, next) {
@@ -39,7 +40,7 @@ router.post('/register',function(req, res, next) {
     }
     if (user){
       req.session.user = user._id;
-      res.render('index')    
+      res.redirect('/');
     } else {
       res.render('register')
     }
@@ -55,8 +56,20 @@ router.post('/logout',function(req, res, next) {
   });
 });
 
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/:id',function(req, res, next) {
+  try {
+      var id = new ObjectID(req.params.id);
+  } catch (e) {
+      return next(404);
+  }
+  User.findById(req.params.id).exec(function(err, post) {
+      if (err) return next(err); 
+      if (!post) {
+        next(404);
+      } else {
+        res.render('users/show', {user: user})
+      }
+  })  
 });
 
 module.exports = router;
