@@ -13,6 +13,10 @@ var posts = require('./routes/posts');
 var search = require('./routes/search');
 
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+app.set('socketio', io);
 
 // view engine setup
 app.engine('ejs', require('ejs-locals'));
@@ -85,4 +89,12 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;
+http.listen(1337, function(){
+  console.log('listening on *:1337');
+});
+
+io.on('connection', function(socket){
+  socket.on('room', function(room) {
+    socket.join(room);
+  });
+})

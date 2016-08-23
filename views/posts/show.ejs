@@ -27,7 +27,7 @@
   <div class="col-md-12">
     <div class="page-header">
       <h3>
-        <a href='/posts/<%=post._id%>/comments' class='refresh-comments'><small class="pull-right"><%= post.comments.length %> comments</small></a> Comments 
+        <a href='/posts/<%=post._id%>/comments' class='refresh-comments'><small class="pull-right" id='comments_count'><%= post.comments.length %> comments</small></a> Comments 
       </h3>
     </div> 
     
@@ -47,3 +47,14 @@
   </div>
 </div>
 </div>
+
+
+<script>
+  var socket = io();
+  socket.on('connect', function() {
+    socket.emit('room', '<%=post._id%>');
+  });
+  socket.on('comments_count', function(data) {
+    $('#comments_count').text(data + ' comments')
+  });
+</script>

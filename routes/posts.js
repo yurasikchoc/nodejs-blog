@@ -104,6 +104,8 @@ router.post('/:id/new_comment', function(req, res, next){
 	        if (err)
 	 			return next(err); 				
 			else
+			    var io = req.app.get('socketio');
+				io.sockets.in(''+id).emit('comments_count', post.comments.length+1);
 				res.redirect('../'+id);
 	    }
 	);
