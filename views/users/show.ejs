@@ -1,0 +1,41 @@
+<% layout('/layouts/application') -%>
+
+
+<% block('title', user.username) -%>
+
+<div class="panel panel-default">
+<div class="panel-body">
+
+<form class="form-horizontal login-form" name="login-form" method="post">
+  <div class="form-group">
+    <label for="input-username" class="col-lg-2 control-label">Username</label>
+
+    <div class="col-lg-10">
+      <input name="username" value="<%= user.username %>" type="text" class="form-control" id="input-username" readonly='true'>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="input-firstname" class="col-lg-2 control-label">First name</label>
+
+    <div class="col-lg-10">
+      <input name="firstName" value="<%= user.firstName %>" type="text" class="form-control" id="input-firstname" readonly='true'>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="input-lastname" class="col-lg-2 control-label">Last name</label>
+
+    <div class="col-lg-10">
+      <input name="lastName" value="<%= user.lastName %>" type="text" class="form-control" id="input-lastname" readonly='true'>
+    </div>
+  </div>
+
+
+  
+</form>
+
+</div>
+</div>
+
+<a href="/users/<%=user._id%>/posts" class="btn btn-raised btn-info">Show posts</a>

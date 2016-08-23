@@ -4,7 +4,7 @@
 <div class="panel-body">
   <h2>
     <%= post.title %>
-    <% if ( user && post.postedBy._id.equals(user._id)) { %>
+    <% if ( current_user && post.postedBy._id.equals(current_user._id)) { %>
       <a href="/posts/<%=post._id%>/edit"><small> edit</small></a>
       <a href="/posts/<%=post._id%>/" class="delete-post"><small> delete</small></a>
     <% } %> 
@@ -31,7 +31,7 @@
       </h3>
     </div> 
     
-    <% if (user) { %>
+    <% if (current_user) { %>
       <form action="<%=post._id%>/new_comment" method="post" class="form-horisontal"  style="margin-top:30px;">  
         <div class="form-group" >  
           <textarea name="body"  type="text" class="form-control" id="inputComment"  placeholder="Add a new comment..."></textarea> 

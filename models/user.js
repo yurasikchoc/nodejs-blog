@@ -31,7 +31,8 @@ var schema = new Schema({
   created: {
     type: Date,
     default: Date.now
-  }
+  },
+  posts : [{ type: Schema.Types.ObjectId, ref: 'Post' }]
 });
 
 schema.methods.encryptPassword =  function(password){

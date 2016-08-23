@@ -1,0 +1,6 @@
+<% layout('/layouts/application') -%>
+<% block('title', user.username + '\'s posts') -%>
+
+<% posts.forEach(function(post){ %>
+  <%-partial('../partials/post', {post: post})%>
+<% }) %>

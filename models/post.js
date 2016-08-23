@@ -21,8 +21,9 @@ var schema = new Schema({
   },
   postedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
   },
+  username: String,
   comments: [
     {
       body:"string", 
@@ -37,5 +38,6 @@ var schema = new Schema({
     default: Date.now
   }
 });
+schema.index({'$**': 'text'});
 
 exports.Post = mongoose.model('Post', schema);

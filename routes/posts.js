@@ -20,7 +20,8 @@ router.post('/new',function(req, res, next) {
 		title: title,
 		body: body,
 		imgUrl: imgUrl,
-		postedBy: req.user
+		postedBy: req.user,
+		username :req.user.username
 	});
 	post.save(function(err){
 		if (err) next(err);

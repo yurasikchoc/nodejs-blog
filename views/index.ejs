@@ -1,31 +1,5 @@
 <% layout('/layouts/application') -%>
 
 <% posts.forEach(function(post){ %>
-  <div class="panel panel-default">
-  <div class="panel-body">
-    <h2>
-      <a href="/posts/<%=post._id%>">
-        <%= post.title %>
-      </a>
-
-      <% if ( user && post.postedBy._id.equals(user._id)) { %>
-        <a href="/posts/<%=post._id%>/edit"><small> edit</small></a>
-        <a href="/posts/<%=post._id%>/" class="delete-post"><small> delete</small></a>
-      <% } %>	
-    </h2>
-    <p>
-      <%= post.body %>
-    </p>
-    
-    <div>
-      <span class="badge"><%= post.created.toLocaleString()%></span>
-      <div class="pull-right"> 
-        <a  href="/users/<%=post.postedBy._id%>">
-          <span class="label label-info"><%= post.postedBy.username %></span> 
-        </a>
-      </div>         
-    </div>
-    <hr>  
-  </div>
-  </div>
+  <%-partial('./partials/post', {post: post})%>
 <% }) %>
