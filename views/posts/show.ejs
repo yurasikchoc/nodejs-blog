@@ -1,57 +1,49 @@
 <% layout('/layouts/application') -%>
 
-<div class="well">
-  <div class="container">
-    <div class="col-md-11">
-        <h2>
-            <%= post.title %>
-        
-            <% if ( user && post.postedBy._id.equals(user._id)) { %>
-                <a href="/posts/<%=post._id%>/edit"><small> edit</small></a>
+<div class="panel panel-default">
+<div class="panel-body">
+  <h2>
+    <%= post.title %>
+    <% if ( user && post.postedBy._id.equals(user._id)) { %>
+      <a href="/posts/<%=post._id%>/edit"><small> edit</small></a>
+      <a href="/posts/<%=post._id%>/" class="delete-post"><small> delete</small></a>
+    <% } %> 
+  </h2>    	
 
-            <% } %> 
-        </h2>    	
-        <p>
-            <%= post.body %> 
-        </p>
-    	<div>
-			<span class="badge">Posted <%= post.created.toLocaleString()%></span>
-			<div class="pull-right"> 
-				<a  href="/users/<%=post.postedBy._id%>">
-                    <span class="label label-info"><%= post.postedBy.username %></span> 
-                </a>
-			</div>         
-     	</div>
-        <hr>
+  <p>
+    <%= post.body %> 
+  </p>
+  <div>
+    <span class="badge">Posted <%= post.created.toLocaleString()%></span>
+    <div class="pull-right"> 
+      <a  href="/users/<%=post.postedBy._id%>">
+        <span class="label label-info"><%= post.postedBy.username %></span> 
+      </a>
+    </div>         
+  </div>
+  
+  <hr>
 
-
-        <div class="col-md-12">
-            <div class="page-header">
-                <h3><small class="pull-right"><%= post.comments.length %> comments</small> Comments </h3>
-            </div> 
-        <form action="<%=post._id%>/new_comment" method="post" class="form-horisontal" style="margin-top:30px;">
-            <div class="form-group">
-              <textarea name="body" type="text" class="form-control" id="inputComment" placeholder="Add a new comment..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-default">Create comment</button>
-        </form>
-        <br>
-        <div class="comments-list">
-            <% post.comments.reverse().forEach(function(comment){ %>
-
-            <div class="media">
-              <p class="pull-right"><small></small></p>
-              <a class="media-left" href="#">
-                <img src="http://lorempixel.com/40/40/people/4/">
-              </a>
-              <div class="media-body">    
-                <h4 class="media-heading user_name"> <%= comment.by.username %> </h4>
-                  <%= comment.body %>
-              </div>
-            </div>
-            <% }) %>
-          </div>  
-        </div>
-        </div>
+  <div class="col-md-12">
+    <div class="page-header">
+      <h3>
+        <a href='/posts/<%=post._id%>/comments' class='refresh-comments'><small class="pull-right"><%= post.comments.length %> comments</small></a> Comments 
+      </h3>
+    </div> 
+    
+    <% if (user) { %>
+      <form action="<%=post._id%>/new_comment" method="post" class="form-horisontal"  style="margin-top:30px;">  
+        <div class="form-group" >  
+          <textarea name="body"  type="text" class="form-control" id="inputComment"  placeholder="Add a new comment..."></textarea> 
+        </div>  
+        <button type="submit" class="btn btn-default">Create comment</button>
+      </form>
+    <% } %>  
+    <br>
+    
+    <div class="comments-list">
+      <%-partial('./comments_list')%>
+    </div>  
+  </div>
 </div>
 </div>

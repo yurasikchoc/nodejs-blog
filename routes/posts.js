@@ -11,6 +11,11 @@ router.post('/new',function(req, res, next) {
 	var title = req.body.title;	
 	var body = req.body.body;
 	var imgUrl = req.body.imgUrl;
+	if (title == ''){
+		req.flash('error', 'Title can not be empty')
+		res.redirect('new');
+		return;
+	}
 	var post = new Post({
 		title: title,
 		body: body,
@@ -66,9 +71,14 @@ router.post('/:id/edit', function(req, res, next){
 		if (!post) {
 			next(404);
 		} else {
-			post.body = req.body.body;
 			post.title = req.body.title;
+			post.body = req.body.body;
 			post.imgUrl = req.body.imgUrl;
+			if (post.title == ''){
+				res.locals.error = 'Title can not be empty';
+				res.render('posts/edit', {post: post})
+				return;
+			}
 			post.save(function(err) {
 				if (err)
 					return next(err); 				
@@ -96,6 +106,33 @@ router.post('/:id/new_comment', function(req, res, next){
 				res.redirect('../'+id);
 	    }
 	);
+});
+
+router.delete('/:id', function(req, res, next){
+	try {
+		var id = new ObjectID(req.params.id);
+	} catch (e) {
+		return next(404);
+	}  
+	Post.findOneAndRemove({_id: id, postedBy: req.user}, function(doc) {
+		res.sendStatus(200);
+	});
+});
+
+router.get('/:id/comments', function(req, res, next){
+	try {
+      var id = new ObjectID(req.params.id);
+    } catch (e) {
+      return next(404);
+    }  
+    Post.findById(req.params.id).populate('comments.by').exec(function(err, post) {
+  		if (err) return next(err); 
+  		if (!post) {
+  			next(404);
+  		} else {
+  		  res.render('posts/comments_list', {post: post})
+      }
+	})
 });
 
 module.exports = router;

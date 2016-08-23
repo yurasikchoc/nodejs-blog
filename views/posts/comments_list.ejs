@@ -1,0 +1,12 @@
+<% post.comments.reverse().forEach(function(comment){ %>
+  <div class="media">
+    <p class="pull-right"><small></small></p>
+    <a class="media-left" href="/users/<%=comment.by._id%>">
+      <img src="http://www.gravatar.com/avatar/<%= comment.by._id %>?s=36&d=identicon&r=PG">
+    </a>
+    <div class="media-body">    
+      <h4 class="media-heading user_name"><a href="/users/<%=post.postedBy._id%>"><%= comment.by.username %> </a></h4>
+      <%= comment.body %>
+    </div>
+  </div>
+<% }) %>
