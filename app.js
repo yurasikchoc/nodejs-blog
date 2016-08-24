@@ -88,9 +88,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
-http.listen(1337, function(){
-  console.log('listening on *:1337');
+var port = process.env.PORT || 1337;
+http.listen(port, function(){
+  console.log('listening on *:' + port);
 });
 
 io.on('connection', function(socket){
@@ -98,3 +98,4 @@ io.on('connection', function(socket){
     socket.join(room);
   });
 })
+
