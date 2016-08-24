@@ -25,8 +25,12 @@ var schema = new Schema({
   },
   username: String,
   comments: [
-    {
+    {      
       body:"string", 
+      created: {
+        type: Date,
+        default: Date.now
+      },
       by: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

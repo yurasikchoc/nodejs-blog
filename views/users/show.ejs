@@ -5,13 +5,14 @@
 
 <div class="panel panel-default">
 <div class="panel-body">
-
+<% var is_current = user._id.equals(current_user._id) %>
+<% if (!is_current) var readonly_attr = "readonly=\'true\'" %>
 <form class="form-horizontal login-form" name="login-form" method="post">
   <div class="form-group">
     <label for="input-username" class="col-lg-2 control-label">Username</label>
 
     <div class="col-lg-10">
-      <input name="username" value="<%= user.username %>" type="text" class="form-control" id="input-username" readonly='true'>
+      <input name="username" value="<%= user.username %>" type="text" class="form-control" id="input-username" <%= readonly_attr %> >
     </div>
   </div>
 
@@ -19,7 +20,7 @@
     <label for="input-firstname" class="col-lg-2 control-label">First name</label>
 
     <div class="col-lg-10">
-      <input name="firstName" value="<%= user.firstName %>" type="text" class="form-control" id="input-firstname" readonly='true'>
+      <input name="firstName" value="<%= user.firstName %>" type="text" class="form-control" id="input-firstname" <%= readonly_attr %>>
     </div>
   </div>
   
@@ -27,12 +28,18 @@
     <label for="input-lastname" class="col-lg-2 control-label">Last name</label>
 
     <div class="col-lg-10">
-      <input name="lastName" value="<%= user.lastName %>" type="text" class="form-control" id="input-lastname" readonly='true'>
+      <input name="lastName" value="<%= user.lastName %>" type="text" class="form-control" id="input-lastname" <%= readonly_attr %>>
     </div>
   </div>
 
-
-  
+  <% if (is_current) { %>
+    <div class="form-group">
+      <div class="col-lg-offset-2 col-lg-10">
+        <button type="submit" class="btn btn-primary">Update profile</button>
+        <span class="help-block error"></span>
+      </div>
+    </div>
+  <% } %>  
 </form>
 
 </div>

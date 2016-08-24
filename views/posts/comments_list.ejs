@@ -1,5 +1,26 @@
+<div class="comments">
+<ul class="media-list">
+                
 <% post.comments.reverse().forEach(function(comment){ %>
-  <div class="media">
+  <li class="media">
+    <div class="comment">
+      <a href="/users/<%=comment.by._id%>" class="pull-left">
+      <img src="http://www.gravatar.com/avatar/<%= comment.by._id %>?s=36&d=identicon&r=PG" alt="" class="img-circle">
+      </a>
+      <div class="media-body">
+        <strong class="text-success"><%= comment.by.username %></strong>
+        <span class="text-muted">
+        <small class="text-muted"><%= comment.created.toLocaleString() %></small>
+        </span>
+        <p>
+          <%= comment.body %>
+        </p>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </li>
+
+  <!-- <div class="media">
     <p class="pull-right"><small></small></p>
     <a class="media-left" href="/users/<%=comment.by._id%>">
       <img src="http://www.gravatar.com/avatar/<%= comment.by._id %>?s=36&d=identicon&r=PG">
@@ -8,5 +29,7 @@
       <h4 class="media-heading user_name"><a href="/users/<%=post.postedBy._id%>"><%= comment.by.username %> </a></h4>
       <%= comment.body %>
     </div>
-  </div>
+  </div> -->
 <% }) %>
+</ul>
+</div>

@@ -83,6 +83,43 @@ router.get('/:id',function(req, res, next) {
   })  
 });
 
+router.post('/:id',function(req, res, next) {
+  try {
+      var id = new ObjectID(req.params.id);
+  } catch (e) {
+      return next(404);
+  }
+  if (!id.equals(req.user._id)){
+    res.redirect('/')
+    return;
+  }
+  var username = req.body.username;
+  var firstName = req.body.firstName;
+  var lastName = req.body.lastName;
+  if (username == '') {
+    req.flash('error', 'Username can\'t be blank')
+    res.redirect('' + id)
+    return;
+  }
+  User.findById(id, function(err, user) {
+      if (err) return next(err); 
+      if (!user) {
+        next(404);
+      } else {
+        user.username = username;
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.save(function(err) {
+          if (err)
+            return next(err);         
+          else
+            req.flash('success', 'Profile successfully updated')
+            res.redirect('' + id)
+        });
+      }
+  })  
+});
+
 router.get('/:id/posts',function(req, res, next) {
   try {
       var id = new ObjectID(req.params.id);
