@@ -134,8 +134,43 @@ router.get('/:id/comments', function(req, res, next){
   			next(404);
   		} else {
   		  res.render('posts/comments_list', {post: post})
-      }
+      	}
 	})
+});
+
+router.post('/:id/rate', function(req, res, next){
+	try {
+      var id = new ObjectID(req.params.id);
+    } catch (e) {
+      return next(404);
+    } 
+ 
+    if (!req.user){
+    	res.redirect('/');
+    }
+    console.log(id);
+    console.log(req.user);    
+   	Post.findOneAndUpdate(
+	    {_id: id},
+	    {$pull: {ratings: {by: req.user._id}}},
+	    {safe: true, upsert: true},
+	    function(err, post) {
+		    console.log(err);
+  			if (err) return next(err); 
+  			if (!post) {
+  				next(404);
+			} else {
+			    console.log(post);
+  				Post.findOneAndUpdate(
+	    			{_id: id},
+	    			{$push: {ratings: {value: req.body.rating, by: req.user._id}}},
+	    			{safe: true, upsert: true},
+	    			function(err, post) {
+  						if (err) return next(err); 
+						res.sendStatus(200)
+				});
+			}
+    });
 });
 
 module.exports = router;

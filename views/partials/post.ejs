@@ -5,11 +5,21 @@
         <%= post.title %>
       </a>
 
-      <% if ( current_user && post.postedBy._id.equals(current_user._id)) { %>
+      <% if (current_user && post.postedBy._id.equals(current_user._id)) { %>
         <a href="/posts/<%=post._id%>/edit"><small> edit</small></a>
         <a href="/posts/<%=post._id%>/" class="delete-post"><small> delete</small></a>
-      <% } %>	
+      <% } %>
+      <% if (current_user) { %>
+        <div class="pull-right">
+          <% filtered = post.ratings.filter(function(rating){ return current_user._id.equals(rating.by); })[0] %> 
+          <% current_user_rating = filtered ? filtered.value : 0 %>
+          <small><input type="number" class="rating" id="test" name="test" data-link='/posts/<%=post._id%>/rate' data-min="1" data-max="5" 
+          value="<%= current_user_rating %>"></small>
+        </div>  
+      <% } %> 
+  
     </h2>
+
     <p>
       <%= post.body %>
     </p>
