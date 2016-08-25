@@ -22,4 +22,16 @@ $( document ).ready(function() {
    		 	}
 		});
 	});
+
+	$('.logout-link').click(function(e){
+		e.preventDefault();
+		var path = $(this).attr("href");
+		$.ajax({
+    		url: path,
+    		type: 'POST',
+    		success: function(result) {
+      			window.location = "/";
+   		 	}
+		});
+	});
 });
