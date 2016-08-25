@@ -5,7 +5,7 @@
 
 <div class="panel panel-default">
 <div class="panel-body">
-<% var is_current = user._id.equals(current_user._id) %>
+<% var is_current = current_user && user._id.equals(current_user._id) %>
 <% if (!is_current) var readonly_attr = "readonly=\'true\'" %>
 <form class="form-horizontal login-form" name="login-form" method="post">
   <div class="form-group">
