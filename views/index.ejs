@@ -1,5 +1,14 @@
 <% layout('/layouts/application') -%>
 
+<% if (posts.length == 0) { %>
+	<h2> There are  no posts yet. 
+		<% if (current_user) { %>
+			You can <a href='/posts/new'>create post</a>.
+		<% } else { %>
+			<a href='/users/login'>Log in</a> or <a href='/users/register'>sign up</a> to create post.
+		<% } %>
+	</h2>
+<% } %>
 <% posts.forEach(function(post){ %>
   <%-partial('./partials/post', {post: post})%>
 <% }) %>
